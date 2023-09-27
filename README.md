@@ -4,8 +4,7 @@ WSU Capstone Senior Project
 ## Setup
 **1. Download source code and open up a terminal** <br>
 **2. Setup an environment for the project** <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. "py -m venv project-name" will create a folder project name with environment info
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(myvenv or venv suggested they are already in the git ignore)  <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. "py -m venv project-name" will create a folder project name with environment info (myvenv or venv suggested they are already in the git ignore)  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Activate the environment go to project-name/Scripts and run activate or activate.bat  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. You should see (project-name) on the far left of your terminal  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Make sure you run activate every time you open a new terminal to work inside your env 
