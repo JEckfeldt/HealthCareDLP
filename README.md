@@ -1,7 +1,7 @@
 # HealthCareDLP
 WSU Capstone Senior Project
 
-# How to run
+# Setup
 Download source code and open up a terminal
 Setup an environment for the project
     1. "py -m venv project-name" will create a folder project name with environment info
@@ -14,6 +14,12 @@ Install the python reqs
     1. Make sure you are in the same dir as requirements.txt
     2. Run "pip install -r requirements.txt"
     3. This gives you all the packages used for the project (Just Django for now)
+
+# Django Server
+To run the Django Server on localhost:8000 by default
+    1. Make sure you're in the same directory as manage.py (HealthCareForm)
+    2. Run "python manage.py runserver"
+    3. Ctrl-C in terminal will quit the server
 
 # Description
 A Django health care patient app that focuses on encryption and access control management as Data Loss Prevention methods.
