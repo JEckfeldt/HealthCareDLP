@@ -2,7 +2,7 @@
 WSU Capstone Senior Project
 
 ## Setup
-**1. Download source code and open up a terminal**
+**1. Download source code and open up a terminal** <br>
 **2. Setup an environment for the project** <br>
     1. "py -m venv project-name" will create a folder project name with environment info
     (myvenv or venv suggested they are already in the git ignore)  <br>
