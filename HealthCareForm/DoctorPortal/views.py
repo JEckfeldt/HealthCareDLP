@@ -12,7 +12,7 @@ def doctor_form(request):
         if form.is_valid():
             data = form.cleaned_data
             Doctor.objects.create(**data)
-            return redirect('success_url')
+            return redirect('/')
     else:
         form = DoctorForm()
     return render(request, 'doctor_form.html', {'doctor_form': form})
