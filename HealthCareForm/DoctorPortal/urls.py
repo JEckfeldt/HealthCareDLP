@@ -16,8 +16,18 @@ Including another URLconf
 """
 from django.urls import path, include
 from . import views
+#app_name='doctor'
+
+
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('home', views.doctorHome, name='doctorHome'),
     path('doctor_form/', views.doctor_form, name='doctor_form'),
+    path('addPatient', views.addPatient, name='addPatient'),
+    path('addPatient/<str:patientUsername>/', views.addPatient2, name='addPatient2'),
+    path('viewPatients', views.viewPatients, name='viewPatients'),
+    path('scheduleAppointmentDoctor', views.scheduleAppointmentDoctor, name='scheduleAppointmentDoctor'),
+    path('viewAppointmentsDoctor', views.viewAppointmentsDoctor, name='viewAppointmentsDoctor'),
+    path('addDiagnosis', views.addDiagnosis, name='addDiagnosis'),
+    path('logoutDoctor', views.logoutDoctor, name='logoutDoctor'),
 ]

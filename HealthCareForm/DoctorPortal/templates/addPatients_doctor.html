@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+   
+<h1>Welcome to the Patient Addition Screen!</h1>
+    <br>
+
+    {% if patients %}  
+        <ul>   
+            {% for p in patients %}  
+               
+                <a href="{% url 'addPatient2' patientUsername=p.username %}"> {{p}} </a> <br>
+                {% endfor %}  
+        </ul>   
+    {% endif %} 
+    
+{% endblock content %}

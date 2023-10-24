@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Welcome to the Patient Home Page, {{user.username}}</h1>
+    <br>
+    <div class="card-action">
+
+        <div class="card-action">
+            <a href="{% url 'viewProfile'%}">View My Profile</a>
+          </div>
+
+        View Past Appointments<br>
+        <div class="card-action">
+            <a href="{% url 'viewFutureAppointmentsPatient'%}">View Future Appointments</a>
+        </div>
+
+        <div class="card-action">
+            <a href="{% url 'scheduleAppointmentPatient'%}">Schedule New Appointment</a>
+          </div>
+          <div class="card-action">
+            <a href="{% url 'viewProfile'%}">View My Profile</a>
+          </div>
+        View Medical History<br>
+
+        <div class="card-action">
+            <a href="{% url 'logoutPatient'%}">Logout</a>
+          </div>
+      </div>
+    
+{% endblock content %}
