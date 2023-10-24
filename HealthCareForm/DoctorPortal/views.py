@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from .doctor_form import DoctorForm
 from .models import Doctor
 
+#login 
+
+def login(request):
+    return render(request, 'login.html', {})
+
 # home view
 def home(request):
     return render(request, 'home.html', {})
