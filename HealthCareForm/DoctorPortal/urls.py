@@ -27,7 +27,11 @@ urlpatterns = [
     path('addPatient/<str:patientUsername>/', views.addPatient2, name='addPatient2'),
     path('viewPatients', views.viewPatients, name='viewPatients'),
     path('scheduleAppointmentDoctor', views.scheduleAppointmentDoctor, name='scheduleAppointmentDoctor'),
-    path('viewAppointmentsDoctor', views.viewAppointmentsDoctor, name='viewAppointmentsDoctor'),
+    path('viewFutureAppointmentsDoctor', views.viewFutureApppointmentsDoctor, name='viewFutureAppointmentsDoctor'),
+    path('viewPastAppointmentsDoctor', views.viewPastApppointmentsDoctor, name='viewPastAppointmentsDoctor'),
     path('addDiagnosis', views.addDiagnosis, name='addDiagnosis'),
     path('logoutDoctor', views.logoutDoctor, name='logoutDoctor'),
+    path('editProfileDoctor/<str:patientUsername>/', views.editProfileDoctor, name='editProfileDoctor'),
+    path('editAppointmentDoctor/<str:patientUsername>/<int:apptID>', views.editAppointmentDoctor, name='editAppointmentDoctor'),
+    path('viewProfileDoctor/<str:patientUsername>', views.viewProfileDoctor, name='viewProfileDoctor'),
 ]

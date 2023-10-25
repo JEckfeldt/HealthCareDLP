@@ -102,4 +102,12 @@ class AppointmentFormPatient(forms.ModelForm):
         newAppt.save()
         return newAppt
     
+class EditProfileFormPatient(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(EditProfileFormPatient, self).__init__(*args, **kwargs)
     
+    class Meta:
+        model = Patient
+        exclude = ('createdAt', 'lastUpdated', 'last_login', 'password', 'username', 'fname', 'lname', 'is_patient', 'is_doctor', 'ssn', )
+

@@ -121,6 +121,17 @@ class DiagnosisForm(forms.ModelForm):
         newDiagnosis.diagnosis = self.cleaned_data['diagnosis']
         newDiagnosis.save()
         return newDiagnosis
+    
+class EditProfileFormDoctor(forms.ModelForm):
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(EditProfileFormDoctor, self).__init__(*args, **kwargs)
+    
+    class Meta:
+        model = Patient
+        exclude = ('createdAt', 'lastUpdated', 'staffUser', 'patient', 'updaterUsername', 'age', 'ssn', 'name', 'username', 'password', 'last_login', 'phone', 'address', 'fname', 'lname', 'is_doctor', 'is_patient', 'sex',)
+    
+
 
 
         

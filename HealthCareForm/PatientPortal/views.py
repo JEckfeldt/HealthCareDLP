@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from DoctorPortal.models import *
 from django.contrib.auth import authenticate, login, logout
-from .forms import NewPatientForm, LoginForm, AppointmentFormPatient
+from .forms import NewPatientForm, LoginForm, AppointmentFormPatient, EditProfileFormPatient
 from . import logging
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -119,6 +119,14 @@ def viewFutureApppointmentsPatient(request):
         #logging.debug('appt id: ' + str(a.id))
     return render(request, "viewFutureAppointmentsPatient.html", context = {'user': current_user, "appts": myAppts})
 
+def viewPastApppointmentsPatient(request):
+    current_user = request.user
+    today = date.today()
+    myAppts = Appointments.objects.filter(patient=current_user, apptDate__lt=today)
+    #for a in myAppts:
+        #logging.debug('appt id: ' + str(a.id))
+    return render(request, "viewPastAppointmentsPatient.html", context = {'user': current_user, "appts": myAppts})
+
 def editAppointmentPatient(request, patientUsername, apptID):
     chosenAppt1 = Appointments.objects.filter(id = apptID)
     chosenAppt = chosenAppt1[0]
@@ -135,6 +143,24 @@ def editAppointmentPatient(request, patientUsername, apptID):
         form = AppointmentFormPatient(user=current_user, instance=chosenAppt)    
     #logging.debug("PatientNotes from chosenAppt: " + chosenAppt.patientNotes)
     return render(request, 'editAppointments_patient.html', context = {'appt': chosenAppt, 'user': current_user, 'form': form})
+
+def editProfilePatient(request):
+    current_user = request.user
+    chosenProfile1 = Patient.objects.filter(username=current_user.username)
+    chosenProfile = chosenProfile1[0]
+    if (request.method == 'POST'):
+        form = EditProfileFormPatient(user=current_user, data=request.POST, instance=chosenProfile)
+        if form.is_valid() is True:
+            chosenProfile.history = form.cleaned_data['history']
+            chosenProfile.symptoms = form.cleaned_data['symptoms']
+            chosenProfile.allergies = form.cleaned_data['allergies']
+            chosenProfile.age = form.cleaned_data['age']
+            chosenProfile.weight = form.cleaned_data['weight']
+            chosenProfile.save()
+            return redirect(viewProfile)
+    else:
+        form = EditProfileFormPatient(user=current_user, instance=chosenProfile)
+    return render(request, 'editProfile_patient.html', context = {'user': current_user, 'profile': chosenProfile, 'form': form})
 
 
 

@@ -4,16 +4,16 @@
 <h1>Viewing My Profile</h1>
     <br>
 
-    {% if user %}  
+    {% if patient %}  
         <ul>   
-            Name: {{ user.lname }}, {{ user.fname }} <br>
-            Address: {{ user.address }}<br>
-            Phone Number: {{ user.phone }}<br>
-            Age: {{ user.age }}<br>
-            Sex: {{ user.sex }}<br>
-            Allergies: {{ user.allergies }}<br>
-            History: {{ user.history }}<br>
-            Symptoms: {{ user.symptoms }}<br><br>
+            Name: {{ patient.lname }}, {{ patient.fname }} <br>
+            Address: {{ patient.address }}<br>
+            Phone Number: {{ patient.phone }}<br>
+            Age: {{ patient.age }}<br>
+            Sex: {{ patient.sex }}<br>
+            Allergies: {{ patient.allergies }}<br>
+            History: {{ patient.history }}<br>
+            Symptoms: {{ uspatienter.symptoms }}<br><br>
 
             <h2> Diagnoses </h2>
             {% if diagnoses %}
@@ -35,7 +35,7 @@
             <br><br>
 
             <div class="card-action">
-                <a href="{% url 'editProfilePatient' %}"> Edit Profile</a> <br>
+                <a href="{% url 'editProfileDoctor' patientUsername=patient.username %}"> Edit Patient's Profile</a> <br>
             </div>
 
 

@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Viewing My Active Patients </h1>
+    Select a Patient to View Their Profile
     <br>
 
     {% if patients %}  
         <ul>   
             {% for p in patients %}  
                
-                 {{p}}  <br>
+            <a href="{% url 'viewProfileDoctor' patientUsername=p.patient.username %}">{{p.patient.username}} </a> <br>
+
                 {% endfor %}  
         </ul>   
     {% endif %}
