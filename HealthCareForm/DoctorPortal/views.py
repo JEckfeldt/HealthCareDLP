@@ -1,6 +1,17 @@
 from django.shortcuts import render, redirect
 from .doctor_form import DoctorForm
-from .models import Doctor
+from .models import *
+from django.contrib.auth import authenticate, login, logout
+from . import logging
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import date
+from .forms import *
+from django.http import HttpResponseRedirect
+
+
+#from PatientPortal.views import loginUser
 
 #login 
 
@@ -8,8 +19,38 @@ def login(request):
     return render(request, 'login.html', {})
 
 # home view
-def home(request):
-    return render(request, 'home.html', {})
+def doctorHome(request):
+    #newDoc = Patient()
+    #newDoc.phone = 000000000
+    #newDoc.ssn = 000000000
+    #newDoc.address = 2905
+    #newDoc.username = "testDoc3"
+    #newDoc.password = "Loki98012"
+    #ewDoc.createdAt = date.today()
+    #newDoc.lastUpdated = date.today()
+    #newDoc.fname = "Tony"
+    #newDoc.lname = "Fauci"
+    #newDoc.sex = "M"
+    #newDoc.symptons = ""
+    #newDoc.age = 45
+    #newDoc.weight = 160
+    #newDoc.allergies = ""
+    #newDoc.history = ""
+    #newDoc.is_doctor = True
+    #newDoc.is_patient = False
+    #newDoc.set_password("Loki98012")
+    #newDoc.is_active = True
+    #newDoc.save()
+    current_user = request.user
+    logging.debug(current_user.username)
+    if request.user.is_authenticated:
+        logging.debug("Doc User is authenticated!")
+    else:
+        logging.debug("ERROR: USER Not AUtHENTICATED")
+    
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    return render(request, 'homePage_doctor.html', context = {'user': current_user})
 
 def doctor_form(request):
     if request.method == "POST":
@@ -17,7 +58,176 @@ def doctor_form(request):
         if form.is_valid():
             data = form.cleaned_data
             Doctor.objects.create(**data)
-            return redirect('/')
+            return redirect('home')
     else:
         form = DoctorForm()
     return render(request, 'doctor_form.html', {'doctor_form': form})
+
+def addPatient(request):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    allPatients = Patient.objects.filter(is_patient=True)
+    return render(request, "addPatients_doctor.html", context = {'patients': allPatients})
+
+def addPatient2(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    allPatients = Patient.objects.filter(is_patient=True)
+    chosenPatient = Patient.objects.filter(username=patientUsername)
+    #logging.debug("You have chosen Patient {}".format(chosenPatient[0]))
+    #logging.debug("Pair for consideration: {} -- {}".format(current_user, chosenPatient[0]))
+    duplicate = PatientDoctor.objects.filter(staffUser = current_user, patient = chosenPatient[0])
+    if not duplicate:
+        newPatientDoc = PatientDoctor()
+        newPatientDoc.staffUser = current_user
+        newPatientDoc.patient = chosenPatient[0]
+        newPatientDoc.updaterUsername = current_user.username
+        newPatientDoc.lastUpdated = date.today()
+        newPatientDoc.createdAt = date.today()
+        newPatientDoc.save()
+        return redirect(viewPatients)
+    else:
+        logging.debug(duplicate)
+        logging.debug("Error: this PatientDoctor configuration already exists!")
+
+
+    if current_user.is_doctor == False:
+        logging.debug("ERROR: current user is not a doctor. You should be kicked out.")
+    return render(request, "addPatients_doctor.html", context = {'patients': allPatients})
+
+def viewPatients(request):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    myPatients = PatientDoctor.objects.filter(staffUser = current_user)
+    #for p in myPatients:
+        #logging.debug(p.patient.username)
+    return render(request, 'viewPatients_doctor.html', context = {"patients": myPatients})
+
+def scheduleAppointmentDoctor(request):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    if request.method == 'POST':
+        form = AppointmentFormDoctor(user=current_user, data=request.POST)
+        if form.is_valid():
+            newAppt = form
+            newAppt.staffUser = current_user
+            newAppt.save()
+            logging.debug("Successfully created a new appointment.")
+            return redirect('doctorHome')
+    else:  
+        form = AppointmentFormDoctor(user=current_user)  
+    context = {  
+        'form':form  
+    }  
+    return render(request, 'scheduleAppointment_doctor.html', context)
+
+def viewFutureApppointmentsDoctor(request):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    today = date.today()
+    myAppts = Appointments.objects.filter(staffUser=current_user, apptDate__gt=today)
+    #for a in myAppts:
+        #logging.debug('appt id: ' + str(a.id))
+    return render(request, "viewFutureAppointmentsDoctor.html", context = {'user': current_user, "appts": myAppts})
+
+def viewPastApppointmentsDoctor(request):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    today = date.today()
+    myAppts = Appointments.objects.filter(staffUser=current_user, apptDate__lt=today)
+    #for a in myAppts:
+        #logging.debug('appt id: ' + str(a.id))
+    return render(request, "viewPastAppointmentsDoctor.html", context = {'user': current_user, "appts": myAppts})
+
+def addDiagnosis(request):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    if request.method == 'POST':
+        form = DiagnosisForm(user=current_user, data=request.POST)
+        if form.is_valid():
+            newDiagnosis = form
+            newDiagnosis.staffUser = current_user
+            newDiagnosis.save()
+            logging.debug("Successfully created a new diagnosis.")
+            return redirect('doctorHome')
+    else:  
+        form = DiagnosisForm(user=current_user)  
+    context = {  
+        'form':form  
+    }  
+    return render(request, 'addDiagnosis.html', context)
+
+def logoutDoctor(request):
+    current_user = request.user
+    logout(request)
+    return HttpResponseRedirect('/login')
+
+def editProfileDoctor(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    logging.debug(chosenPatient)
+    if request.method == 'POST':
+        form = EditProfileFormDoctor(user=current_user, data=request.POST, instance=chosenPatient)
+        if form.is_valid() is True:
+            chosenPatient.symptoms = form.cleaned_data['symptoms']
+            chosenPatient.weight = form.cleaned_data['weight']
+            chosenPatient.allergies = form.cleaned_data['allergies']
+            chosenPatient.history = form.cleaned_data['history']
+            chosenPatient.save()
+            logging.debug(form.cleaned_data['symptoms'])
+            logging.debug(form.cleaned_data['weight'])
+            logging.debug(form.cleaned_data['allergies'])
+            logging.debug(form.cleaned_data['history'])
+            logging.debug("Successfully edited patient")
+            return redirect('viewPatients')
+        else:
+            return redirect('doctorHome')
+    else:  
+        form = EditProfileFormDoctor(user=current_user, instance=chosenPatient)  
+    context = {  
+        'form':form, 'user': current_user, 'patient': chosenPatient
+    }  
+    return render(request, 'editProfile_doctor.html', context)
+
+def viewProfileDoctor(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    return render(request, 'viewProfile_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+
+def editAppointmentDoctor(request, patientUsername, apptID):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenAppt1 = Appointments.objects.filter(id = apptID)
+    chosenAppt = chosenAppt1[0]
+    if (request.method == 'POST'):
+        form = AppointmentFormDoctor(user=current_user, data=request.POST, instance=chosenAppt)
+        if form.is_valid() is True:
+            chosenAppt.apptDate = form.cleaned_data['apptDate']
+            chosenAppt.docNotes = form.cleaned_data['docNotes']
+            chosenAppt.patient = form.cleaned_data['mypatient']
+            chosenAppt.save()
+        return redirect(viewFutureApppointmentsDoctor)
+    else:
+        form = AppointmentFormDoctor(user=current_user, instance=chosenAppt)    
+    #logging.debug("PatientNotes from chosenAppt: " + chosenAppt.patientNotes)
+    return render(request, 'editAppointments_patient.html', context = {'appt': chosenAppt, 'user': current_user, 'form': form})
+
+
+
+
+

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Viewing My Active Patients </h1>
+    <br>
+
+    {% if appts %}  
+        <ul>   
+            {% for a in appts %}  
+               
+                 {{a}}  <br>
+                {% endfor %}  
+        </ul>   
+    {% endif %}
+    
+{% endblock content %}

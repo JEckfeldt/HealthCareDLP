@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Viewing My Upcoming Appointments</h1>
+    <br>
+
+    {% if appts %}  
+        <ul>   
+            {% for a in appts %}  
+               
+                Appointment Date: {{a.apptDate}}  <br>
+                Patient Name: {{a.patient.lname}}, {{a.patient.fname}}<br>
+                Doctor Notes: {{ a.docNotes }} <br>
+                Patient Notes: {{ a.patientNotes }} <br>
+                <div class="card-action">
+                    <a href="{% url 'editAppointmentDoctor' patientUsername=a.patient.username apptID=a.id %}"> Edit Appointment</a> <br>
+                </div>
+                <br><br>
+
+            {% endfor %}  
+        </ul>   
+    {% endif %}
+    
+{% endblock content %}
