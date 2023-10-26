@@ -337,3 +337,7 @@ ul {
 	line-height: 50px;
 	list-style: none;
 }
+
+body {
+	padding: 50px;
+}
