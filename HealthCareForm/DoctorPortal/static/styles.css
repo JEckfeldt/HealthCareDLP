@@ -294,10 +294,12 @@ table th {
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
+	text-decoration: none;
 }
 
 a:hover, a:active {
 	background-color: #6f1624;
+	text-decoration: none;
 }
 .card-action {
 	padding-bottom: 30px;
