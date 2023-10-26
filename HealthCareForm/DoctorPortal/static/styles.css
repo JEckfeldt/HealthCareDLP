@@ -246,3 +246,43 @@ table th {
 	background-color: #6f1624;
 }
 
+.form-submit {
+	background-color: #8c1c2d;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+}
+
+.form-submit button:hover {
+	background-color: #6f1624;
+}
+
+.form-submit span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+.form-submit span:after {
+	content: '\00bb';
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
+}
+
+.form-submit:hover span {
+	padding-right: 25px;
+}
+
+.form-submit:hover span:after {
+	opacity: 1;
+	right: 0;
+}
