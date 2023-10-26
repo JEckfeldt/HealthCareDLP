@@ -2,34 +2,35 @@
 {% block content %}
     <h1>Welcome to the Doctor Home Page, Dr. {{user.lname}}</h1>
     <br>
+    <ul>
+        <div class="card-action">
+            <a href="{% url 'addPatient'%}">Add New Patient</a>
+        </div>
 
-    <div class="card-action">
-        <a href="{% url 'addPatient'%}">Add New Patient</a>
-      </div>
+        <div class="card-action">
+            <a href="{% url 'viewPatients'%}">View My Patients</a>
+        </div>
 
-    <div class="card-action">
-        <a href="{% url 'viewPatients'%}">View My Patients</a>
-    </div>
+        <div class="card-action">
+            <a href="{% url 'scheduleAppointmentDoctor'%}">Schedule New Appointment</a>
+        </div>
 
-    <div class="card-action">
-        <a href="{% url 'scheduleAppointmentDoctor'%}">Schedule New Appointment</a>
-    </div>
+        <div class="card-action">
+            <a href="{% url 'viewPastAppointmentsDoctor'%}">View Past Appointments</a>
+        </div>
 
-    <div class="card-action">
-        <a href="{% url 'viewPastAppointmentsDoctor'%}">View Past Appointments</a>
-    </div>
+        <div class="card-action">
+            <a href="{% url 'viewFutureAppointmentsDoctor'%}">View Future Appointments</a>
+        </div>
 
-    <div class="card-action">
-        <a href="{% url 'viewFutureAppointmentsDoctor'%}">View Future Appointments</a>
-    </div>
+        <div class="card-action">
+            <a href="{% url 'addDiagnosis'%}">Make New Diagnosis</a>
+        </div>
 
-    <div class="card-action">
-        <a href="{% url 'addDiagnosis'%}">Make New Diagnosis</a>
-    </div>
-
-    <div class="card-action">
-        <a href="{% url 'logoutDoctor'%}">Logout</a>
-    </div>
+        <div class="card-action">
+            <a href="{% url 'logoutDoctor'%}">Logout</a>
+        </div>
+    </ul>
     
     
 {% endblock content %}
