@@ -301,9 +301,9 @@ a:hover, a:active {
 	background-color: #6f1624;
 	text-decoration: none;
 }
-.card-action {
+/* .card-action {
 	padding-bottom: 30px;
-}
+} */
 
 form input {
 	background-color: #a41e34;
@@ -330,4 +330,10 @@ form input:focus {
 
 .card {
 	margin-bottom: 100px;
+}
+
+ul {
+	margin: 0;
+	line-height: 50px;
+	list-style: none;
 }
