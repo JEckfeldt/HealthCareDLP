@@ -287,7 +287,7 @@ table th {
 	right: 0;
 }
 
- a:link, a:visited {
+a:link, a:visited {
 	background-color: #8c1c2d;
 	color: #fff;
 	padding: 10px 20px;
@@ -303,4 +303,31 @@ a:hover, a:active {
 }
 .card-action {
 	padding-bottom: 30px;
+}
+
+form input {
+	background-color: #a41e34;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+}
+form button {
+	background-color: #a41e34;
+	color: #fff;
+	padding: 10px 20px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	text-decoration: none;
+}
+form input:focus {
+	background-color: #8c1c2d;
+}
+
+
+.card {
+	margin-bottom: 100px;
 }
