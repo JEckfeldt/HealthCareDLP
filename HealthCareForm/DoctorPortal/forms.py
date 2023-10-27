@@ -82,7 +82,7 @@ class AppointmentFormDoctor(forms.ModelForm):
         model = Appointments
         exclude = ('patientNotes', 'apptDate', 'staffUser', 'patient', 'updaterUsername')
     
-    apptDate = forms.DateField(label = 'Date of Appointment', widget=DateInput)
+    apptDate = forms.DateField(label = 'Date of Appointment', widget=DateInput(attrs={'class': 'apptDate'}))
     mypatient = forms.ModelChoiceField(
         queryset=Patient.objects.filter(is_patient=True)
     )
