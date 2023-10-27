@@ -341,6 +341,16 @@ ul {
 body {
 	padding: 50px;
 }
+
+select {
+	background: #8c1c2d;
+	color: white;
+}
+
+textarea {
+	background-color: #8c1c2d;
+	color: white;
+}
 /* 
 .apptDate {
 	background-color: red;
