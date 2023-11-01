@@ -4,13 +4,6 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-.top-header { /* added top-header styles */
-	background-color: #ccc;
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 20px;
-	box-sizing: border-box;
-}
 
 .header-left { /* added header-left styles */
 	display: flex;
