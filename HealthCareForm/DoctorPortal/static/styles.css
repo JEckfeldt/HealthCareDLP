@@ -202,6 +202,21 @@ table th {
 	color: #fff;
 	text-align: center;
 	width: 400px;
+	background-color: #8c1c2d;
+	display: inline-block;
+	float: left;
+}
+.login-card-image {
+	border-radius: 10px;
+	background-color: #a41e34;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+	color: #fff;
+	text-align: center;
+	width: 400px;
+	background-color: #8c1c2d;
+	display: inline-block;
+	margin-left: 70px;
 }
 
 .login-card h1 {
