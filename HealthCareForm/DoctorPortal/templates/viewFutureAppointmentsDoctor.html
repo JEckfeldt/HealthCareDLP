@@ -1,7 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'base_doctor.html' %}
 {% block content %}
-    <h1>Viewing My Upcoming Appointments</h1>
-    <br>
+<div class="jumbotron">
+    <h1 class="display-7">Upcoming Appointments</h1>
+    <hr class="my-3">
+</div>
+<br>
 
     {% if appts %}  
         <ul>   

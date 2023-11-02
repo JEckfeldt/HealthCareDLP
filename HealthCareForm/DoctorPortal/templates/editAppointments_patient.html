@@ -1,7 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base_patient.html' %}
 {% block content %}
-    <h1>Editing Appointment</h1>
-    <br>
+<div class="jumbotron">
+  <h1 class="display-7">Edit Appointment</h1>
+  <hr class="my-3">
+</div>
 
     <form method="post">
         {% csrf_token %}
