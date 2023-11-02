@@ -1,12 +1,31 @@
 
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Welcome to the Login Page</h1>
-    <br>
-    <p>{{ message }}</p>
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >Submit</button>
-    </form>
+<head>
+    <style>
+        .sidebar {
+            display: none;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body class="login-page-body">
+    <div class="login-card">
+        <h1>Welcome to the Login Page</h1>
+        <br>
+        <p>{{ message }}</p>
+        <form method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit" >Submit</button>
+        </form>
+    </div>
+<!-- https://www.pexels.com/photo/woman-wearing-face-mask-and-gloves-8949835/ -->
+<!-- https://www.pexels.com/photo/a-medical-practitioner-showing-a-patient-paper-7578808/ -->
+<!-- https://www.pexels.com/photo/adult-biology-chemical-chemist-356040/ -->
+    <div class="login-card-spacing"></div>
+    <div class="login-card-image">
+        <img src="https://images.pexels.com/photos/8949835/pexels-photo-8949835.jpeg" width="333", height="477">
+    </div>
+</body>
 {% endblock content %}
