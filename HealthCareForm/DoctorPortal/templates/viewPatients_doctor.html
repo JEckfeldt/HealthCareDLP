@@ -1,8 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'base_doctor.html' %}
 {% block content %}
-    <h1>Viewing My Active Patients </h1>
-    Select a Patient to View Their Profile
-    <br>
+<div class="jumbotron">
+    <h1 class="display-7">Your Patients</h1>
+    <hr class="my-3">
+    <p>Select patient to view profile</p>
+</div>
 
     {% if patients %}  
         <ul>   

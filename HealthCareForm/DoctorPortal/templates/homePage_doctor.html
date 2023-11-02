@@ -1,39 +1,34 @@
-{% extends 'base.html' %}
+{% extends 'base_doctor.html' %}
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-7">Dashboard</h1>
-        <hr class="my-3">
-    </div>
-    <br>
-    <ul>
-        <div class="card-action">
-            <a href="{% url 'addPatient'%}">Add New Patient</a>
-        </div>
+<div class="jumbotron">
+    <h1 class="display-7">Dashboard</h1>
+    <hr class="my-3">
+</div>
+<br>
 
+{% if appts %}  
+<ul>
+<div class="jumbotron">
+    <h6>Upcoming Appointments</h6>
+    <hr class="my-3">
+</div>
+<br>
+    {% for a in appts %}  
+        
+        Appointment Date: {{a.apptDate}}  <br>
+        Patient Name: {{a.patient.lname}}, {{a.patient.fname}}<br>
+        Doctor Notes: {{ a.docNotes }} <br>
+        Patient Notes: {{ a.patientNotes }} <br>
         <div class="card-action">
-            <a href="{% url 'viewPatients'%}">View My Patients</a>
+            <a href="{% url 'editAppointmentDoctor' patientUsername=a.patient.username apptID=a.id %}"> Edit Appointment</a> <br>
         </div>
+        <br><br>
 
-        <div class="card-action">
-            <a href="{% url 'scheduleAppointmentDoctor'%}">Schedule New Appointment</a>
-        </div>
+    {% endfor %}  
+</ul>   
+{% endif %}
 
-        <div class="card-action">
-            <a href="{% url 'viewPastAppointmentsDoctor'%}">View Past Appointments</a>
-        </div>
 
-        <div class="card-action">
-            <a href="{% url 'viewFutureAppointmentsDoctor'%}">View Future Appointments</a>
-        </div>
-
-        <div class="card-action">
-            <a href="{% url 'addDiagnosis'%}">Make New Diagnosis</a>
-        </div>
-
-        <div class="card-action">
-            <a href="{% url 'logoutDoctor'%}">Logout</a>
-        </div>
-    </ul>
     
     
 {% endblock content %}
