@@ -34,4 +34,5 @@ urlpatterns = [
     path('editProfileDoctor/<str:patientUsername>/', views.editProfileDoctor, name='editProfileDoctor'),
     path('editAppointmentDoctor/<str:patientUsername>/<int:apptID>', views.editAppointmentDoctor, name='editAppointmentDoctor'),
     path('viewProfileDoctor/<str:patientUsername>', views.viewProfileDoctor, name='viewProfileDoctor'),
+    
 ]
