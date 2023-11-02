@@ -219,6 +219,10 @@ table th {
 	margin-left: 70px;
 }
 
+.login-page-body {
+	background-image: url("https://images.pexels.com/photos/631342/pexels-photo-631342.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+}
+
 .login-card h1 {
 	margin-top: 0;
 }
