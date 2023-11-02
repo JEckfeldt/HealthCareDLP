@@ -4,13 +4,6 @@ body {
 	font-family: Arial, sans-serif;
 }
 
-.top-header { /* added top-header styles */
-	background-color: #ccc;
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 20px;
-	box-sizing: border-box;
-}
 
 .header-left { /* added header-left styles */
 	display: flex;
@@ -209,6 +202,25 @@ table th {
 	color: #fff;
 	text-align: center;
 	width: 400px;
+	background-color: #8c1c2d;
+	display: inline-block;
+	float: left;
+}
+.login-card-image {
+	border-radius: 10px;
+	background-color: #a41e34;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+	color: #fff;
+	text-align: center;
+	width: 400px;
+	background-color: #8c1c2d;
+	display: inline-block;
+	margin-left: 70px;
+}
+
+.login-page-body {
+	background-image: url("https://images.pexels.com/photos/631342/pexels-photo-631342.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
 }
 
 .login-card h1 {
