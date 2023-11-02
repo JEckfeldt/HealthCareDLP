@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<div class="top-header">
+        <div class="header-left">
+            
+        </div>
+        <div class="header">
+              <p class="head"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  HealthCare App
+              </p>
+        </div>
+        <div class="header-right">
+           
+        </div>
+    </div>
+	<title>Login Page</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body class="body-background"> <!-- added the "body-background" class here -->
+	<div class="container content login-container"> <!-- added the "login-container" class here -->
+		<div class="card login-card"> <!-- added the "card" and "login-card" classes here -->
+			<h1>Login</h1>
+			<form method="post" action="/login">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="username" required>
+
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" required>
+
+				<button type="submit">Login</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

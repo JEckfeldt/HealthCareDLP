@@ -15,8 +15,23 @@ Including another URLconf
 """
 from django.urls import path, include
 from . import views
+#app_name='doctor'
+
+
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('login', views.our_login, name='login'),
+    path('home', views.doctorHome, name='doctorHome'),
     path('doctor_form/', views.doctor_form, name='doctor_form'),
+    path('addPatient', views.addPatient, name='addPatient'),
+    path('addPatient/<str:patientUsername>/', views.addPatient2, name='addPatient2'),
+    path('viewPatients', views.viewPatients, name='viewPatients'),
+    path('scheduleAppointmentDoctor', views.scheduleAppointmentDoctor, name='scheduleAppointmentDoctor'),
+    path('viewFutureAppointmentsDoctor', views.viewFutureApppointmentsDoctor, name='viewFutureAppointmentsDoctor'),
+    path('viewPastAppointmentsDoctor', views.viewPastApppointmentsDoctor, name='viewPastAppointmentsDoctor'),
+    path('addDiagnosis', views.addDiagnosis, name='addDiagnosis'),
+    path('logoutDoctor', views.logoutDoctor, name='logoutDoctor'),
+    path('editProfileDoctor/<str:patientUsername>/', views.editProfileDoctor, name='editProfileDoctor'),
+    path('editAppointmentDoctor/<str:patientUsername>/<int:apptID>', views.editAppointmentDoctor, name='editAppointmentDoctor'),
+    path('viewProfileDoctor/<str:patientUsername>', views.viewProfileDoctor, name='viewProfileDoctor'),
 ]

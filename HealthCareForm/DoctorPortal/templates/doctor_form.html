@@ -1,5 +1,40 @@
-<form method="post">
-    {% csrf_token %}
-    {{ doctor_form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head> 
+		<div class="top-header"> <!-- added top-header div -->
+			<div class="header-left"> <!-- added header-left div -->
+				
+			</div>
+			<div class="header">
+				<p class="head">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Appointment Logging</p>
+			</div>
+			<div class="header-right"> <!-- added header-right div -->
+				
+			</div>
+		</div>
+		<div class="sidebar">
+			<h2>Welcome, <%= username %></h2>
+			<ul>
+				<li><a href="/dashboard">Home</a></li>
+				<li><a href="/taskview">Appointments</a></li>
+				<li><a href="/directory">Patients Directory</a></li>
+				<li><a href="/message">Message</a></li>
+				<li><a href="/logout">Logout</a></li>
+			</ul>
+		</div>
+		<title>Dashboard - <%= username %></title>
+		<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+		
+	</head>
+	<body>
+        <div class="content">
+		<form method="post">
+            {% csrf_token %}
+            {{ doctor_form.as_p }}
+            <input type="submit" value="Submit" class="form-submit">
+        </form></div>
+	</body>
+
+</html>

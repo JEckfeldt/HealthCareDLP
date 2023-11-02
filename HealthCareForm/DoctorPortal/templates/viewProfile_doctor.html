@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+   
+<h1>Viewing My Profile</h1>
+    <br>
+
+    {% if patient %}  
+        <ul>   
+            Name: {{ patient.lname }}, {{ patient.fname }} <br>
+            Address: {{ patient.address }}<br>
+            Phone Number: {{ patient.phone }}<br>
+            Age: {{ patient.age }}<br>
+            Sex: {{ patient.sex }}<br>
+            Allergies: {{ patient.allergies }}<br>
+            History: {{ patient.history }}<br>
+            Symptoms: {{ uspatienter.symptoms }}<br><br>
+
+            <h2> Diagnoses </h2>
+            {% if diagnoses %}
+
+            <ul>
+                {% for d in diagnoses %}
+
+                    Name: {{ d.diagnosis }}<br>
+                    Notes: {{ d.docNotes }}<br>
+                    Created At: {{ d.createdAt }}<br><br><br>
+
+                {% endfor %}
+
+
+            </ul>
+
+            {% endif %}
+
+            <br><br>
+
+            <div class="card-action">
+                <a href="{% url 'editProfileDoctor' patientUsername=patient.username %}"> Edit Patient's Profile</a> <br>
+            </div>
+
+
+
+
+        </ul>   
+    {% endif %} 
+    
+{% endblock content %}

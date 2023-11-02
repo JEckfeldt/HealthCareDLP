@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Viewing My Past Appointments</h1>
+    <br>
+
+    {% if appts %}  
+        <ul>   
+            {% for a in appts %}  
+               
+                Appointment Date: {{a.apptDate}}  <br>
+                Patient Name: {{a.patient.lname}}, {{a.patient.fname}}<br>
+                Doctor Notes: {{ a.docNotes }} <br>
+                Patient Notes: {{ a.patientNotes }} <br>
+                <br><br>
+
+            {% endfor %}  
+        </ul>   
+    {% endif %}
+    
+{% endblock content %}
