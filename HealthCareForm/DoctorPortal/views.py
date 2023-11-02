@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 
 #login 
 
-def login(request):
+def our_login(request):
     return render(request, 'login.html', {})
 
 # home view
