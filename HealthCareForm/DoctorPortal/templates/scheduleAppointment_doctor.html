@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base_doctor.html' %}
 {% block content %}
-<form method="post">
+<form method="post" class="myformy">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="submitbutton">Schedule Appointment</button>

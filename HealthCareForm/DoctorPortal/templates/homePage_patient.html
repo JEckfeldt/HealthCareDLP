@@ -1,30 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'base_patient.html' %}
 {% block content %}
-    <h1>Welcome to the Patient Home Page, {{user.username}}</h1>
-    <br>
-    <div class="card-action">
+<div class="jumbotron">
+  <h1 class="display-7">Patient Portal</h1>
+  <hr class="my-3">
+</div>
+<br>
+<ul>
 
-        <div class="card-action">
-            <a href="{% url 'viewProfile'%}">View My Profile</a>
-          </div>
-
-        <div class="card-action">
-            <a href="{% url 'viewPastAppointmentsPatient'%}">View Past Appointments</a>
-        </div>
-
-        <div class="card-action">
-            <a href="{% url 'viewFutureAppointmentsPatient'%}">View Future Appointments</a>
-        </div>
-
-        <div class="card-action">
-            <a href="{% url 'scheduleAppointmentPatient'%}">Schedule New Appointment</a>
-          </div>
-        
-        View Medical History<br>
-
-        <div class="card-action">
-            <a href="{% url 'logoutPatient'%}">Logout</a>
-          </div>
-      </div>
+</ul>
     
 {% endblock content %}
