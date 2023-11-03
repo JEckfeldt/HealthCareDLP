@@ -3,7 +3,16 @@ body {
 	padding: 0;
 	font-family: Arial, sans-serif;
 }
-
+.text
+{
+	font-size: medium;
+	font-style: italic;
+	font-size: 15px;
+}
+.patient-details
+{
+	color: black;
+}
 
 .header-left { /* added header-left styles */
 	display: flex;
@@ -100,12 +109,12 @@ table th, table td {
 
 table th {
 	background-color: #a41e34; /* crimson color */
-	color: #fff;
+	
 }
 .thead-dark
 {
 	background-color: #a41e34; /* crimson color */
-	color: #fff;
+	
 	
 }
 
@@ -182,6 +191,28 @@ table th {
 	height: 80%;
 }
 
+.myformy {
+    background-color: #eeeded;
+    padding: 20px;
+	font-size: 17px;
+	font-style: italic;
+	color: rgb(90, 75, 75);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center; /* Center-align the form contents */
+}
+
+/* Style form fields (input, select, textarea) */
+.myformy input,
+.myformy select,
+.myformy textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+	
+}
 
 .body-background { /* added this new class */
 	background-color: #f5f5f5;
@@ -281,6 +312,8 @@ table th {
 	transition: 0.5s;
 }
 
+
+
 .form-submit span:after {
 	content: '\00bb';
 	position: absolute;
@@ -307,6 +340,15 @@ a:link, a:visited {
 	border: none;
 	cursor: pointer;
 	text-decoration: none;
+}
+.widelink
+{
+	display: block;
+	width: 700px;
+	height: 50px;
+	text-align: center;
+	font-size: 18px;
+	font-family:Arial, Helvetica, sans-serif;
 }
 
 a:hover, a:active {

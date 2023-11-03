@@ -1,47 +1,78 @@
 {% extends 'base_doctor.html' %}
 {% block content %}
-   
-<h1>Viewing My Profile</h1>
-    <br>
-
-    {% if patient %}  
-        <ul>   
-            Name: {{ patient.lname }}, {{ patient.fname }} <br>
-            Address: {{ patient.address }}<br>
-            Phone Number: {{ patient.phone }}<br>
-            Age: {{ patient.age }}<br>
-            Sex: {{ patient.sex }}<br>
-            Allergies: {{ patient.allergies }}<br>
-            History: {{ patient.history }}<br>
-            Symptoms: {{ uspatienter.symptoms }}<br><br>
-
-            <h2> Diagnoses </h2>
+<div class="jumbotron">
+    <h1 class="display-7">Patient Profile</h1>
+    <hr class="my-3">
+</div>
+{% if patient %}
+    <div class="patient-details">
+        <div class="patient-info">
+            <h2>Patient Information</h2><br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Attribute</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>{{ patient.lname }}, {{ patient.fname }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Address</th>
+                        <td>{{ patient.address }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Phone Number</th>
+                        <td>{{ patient.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Age</th>
+                        <td>{{ patient.age }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Sex</th>
+                        <td>{{ patient.sex }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Allergies</th>
+                        <td>{{ patient.allergies }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">History</th>
+                        <td>{{ patient.history }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Symptoms</th>
+                        <td>{{ patient.symptoms }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+ 
+        <div class="patient-diagnoses"><br>
+            <h2>Diagnoses</h2><br>
             {% if diagnoses %}
-
-            <ul>
-                {% for d in diagnoses %}
-
-                    Name: {{ d.diagnosis }}<br>
-                    Notes: {{ d.docNotes }}<br>
-                    Created At: {{ d.createdAt }}<br><br><br>
-
-                {% endfor %}
-
-
-            </ul>
-
+                <ul class="list-group">
+                    {% for d in diagnoses %}
+                        <li class="list-group-item">
+                            <h3>Name:</h3>
+                            <p>{{ d.diagnosis }}</p>
+                            <h3>Notes:</h3>
+                            <p>{{ d.docNotes }}</p>
+                            <h3>Created At:</h3>
+                            <p>{{ d.createdAt }}</p>
+                        </li><br>
+                    {% endfor %}
+                </ul>
             {% endif %}
-
-            <br><br>
-
-            <div class="card-action">
-                <a href="{% url 'editProfileDoctor' patientUsername=patient.username %}"> Edit Patient's Profile</a> <br>
-            </div>
-
-
-
-
-        </ul>   
-    {% endif %} 
-    
+        </div>
+    </div>
+    <br><br>
+    <div class="card-action">
+        <a href="{% url 'editProfileDoctor' patientUsername=patient.username %}">Edit Patient's Profile</a>
+    </div>
+{% endif %}
 {% endblock content %}

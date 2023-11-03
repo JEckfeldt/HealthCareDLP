@@ -3,14 +3,14 @@
 <div class="jumbotron">
     <h1 class="display-7">Your Patients</h1>
     <hr class="my-3">
-    <p>Select patient to view profile</p>
+    <p class="text">Select patient to view profile</p>
 </div>
 
     {% if patients %}  
         <ul>   
             {% for p in patients %}  
                
-            <a href="{% url 'viewProfileDoctor' patientUsername=p.patient.username %}">{{p.patient.username}} </a> <br>
+            <a class="widelink" href="{% url 'viewProfileDoctor' patientUsername=p.patient.username %}">{{p.patient.username}} </a> <br>
 
                 {% endfor %}  
         </ul>   
