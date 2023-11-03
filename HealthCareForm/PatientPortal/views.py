@@ -80,9 +80,14 @@ def patientHome(request):
     logging.debug(current_user.username)
     if request.user.is_authenticated:
         logging.debug("User is authenticated!")
+        current_user = request.user
+        today = date.today()
+        myAppts = Appointments.objects.filter(patient=current_user, apptDate__gte=today)
+        return render(request, "homePage_patient.html", context = {'user': current_user, "appts": myAppts})
     else:
         logging.debug("ERROR: USER Not AUtHENTICATED")
-    return render(request, 'homePage_patient.html', context = {'user': current_user})
+    
+    # return render(request, 'homePage_patient.html', context = {'user': current_user})
 
 def viewProfile(request):
     current_user = request.user
@@ -114,7 +119,7 @@ def scheduleAppointmentPatient(request):
 def viewFutureApppointmentsPatient(request):
     current_user = request.user
     today = date.today()
-    myAppts = Appointments.objects.filter(patient=current_user, apptDate__gt=today)
+    myAppts = Appointments.objects.filter(patient=current_user, apptDate__gte=today)
     #for a in myAppts:
         #logging.debug('appt id: ' + str(a.id))
     return render(request, "viewFutureAppointmentsPatient.html", context = {'user': current_user, "appts": myAppts})

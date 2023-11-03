@@ -5,8 +5,30 @@
   <hr class="my-3">
 </div>
 <br>
-<ul>
+<div class="jumbotron">
+  <h6>
+      <a href="">Upcoming Appointments</a>
+      <a  style="background-color: rgb(70, 69, 69);" href="/viewPastAppointmentsPatient">Previous Appointments</a>
+  </h6>
+  <hr class="my-3">
+</div>
 
-</ul>
+{% if appts %}  
+<ul class="list-group">
+    {% for a in appts %}
+        <div class="card list-group-item" style="width: auto;">
+            <div class="card-body">
+              <h5 class="card-title">Patient: {{a.patient.fname}}, {{a.patient.lname}}</h5>
+              <h6 class="card-subtitle mb-2 ">{{a.apptDate}}</h6>
+              <hr class="my-2">
+              <h6 class="card-subtitle mb-2 text-muted">Doctor Notes: {{a.docNotes}}</h6>
+              <p class="card-text">Patient Notes: {{a.patientNotes}}</p>
+              <a href="{% url 'editAppointmentPatient' patientUsername=a.patient.username apptID=a.id %}" class="card-link">Edit Appointment</a>
+            </div>
+          </div>
+
+    {% endfor %}  
+</ul>   
+{% endif %}
     
 {% endblock content %}

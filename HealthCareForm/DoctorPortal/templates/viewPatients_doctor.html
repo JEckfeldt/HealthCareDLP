@@ -12,8 +12,9 @@
                
             <a href="{% url 'viewProfileDoctor' patientUsername=p.patient.username %}">{{p.patient.username}} </a> <br>
 
-                {% endfor %}  
-        </ul>   
+                {% endfor %}
+                <a href="/addPatient">Add New Patient</a> <br>
+        </ul>
     {% endif %}
     
 {% endblock content %}
