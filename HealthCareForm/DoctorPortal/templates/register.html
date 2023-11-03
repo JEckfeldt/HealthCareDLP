@@ -1,5 +1,3 @@
-{% extends 'base.html' %} 
-  
 {% block content %}  
   
 <div class = "login">  
@@ -12,7 +10,11 @@
         </ul>   
     {% endif %}  
       
-    <h1>Register Here -- ( hello reed :] )</h1>  
+    <div class="jumbotron">
+        <h1 class="display-7">Register</h1>
+        <hr class="my-3">
+    </div>
+    <br>
   
          <form method="post" >  
              {% csrf_token %}  
