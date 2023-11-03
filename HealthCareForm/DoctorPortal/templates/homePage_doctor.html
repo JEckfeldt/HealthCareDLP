@@ -16,7 +16,7 @@
 {% if appts %}  
 <ul class="list-group">
     {% for a in appts %}
-        <div class="card list-group-item" style="width: auto;">
+        <div class="card" style="width: auto; margin-bottom: 20px;">
             <div class="card-body">
               <h5 class="card-title">Patient: {{a.patient.fname}}, {{a.patient.lname}}</h5>
               <h6 class="card-subtitle mb-2 ">{{a.apptDate}}</h6>
