@@ -351,10 +351,10 @@ a:link, a:visited {
 	font-family:Arial, Helvetica, sans-serif;
 }
 
-a:hover, a:active {
+/* a:hover, a:active {
 	background-color: #6f1624;
 	text-decoration: none;
-}
+} */
 /* .card-action {
 	padding-bottom: 30px;
 } */
