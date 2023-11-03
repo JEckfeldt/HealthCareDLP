@@ -50,10 +50,9 @@ def doctorHome(request):
     
     if (current_user.is_doctor == False):
         return HttpResponseRedirect('/login')
+    # get upcoming appointments
     today = date.today()
     myAppts = Appointments.objects.filter(staffUser=current_user, apptDate__gte=today)
-    #for a in myAppts:
-        #logging.debug('appt id: ' + str(a.id))
     return render(request, "homePage_doctor.html", context = {'user': current_user, "appts": myAppts})
 
 def doctor_form(request):

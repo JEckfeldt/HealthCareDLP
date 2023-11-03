@@ -1,8 +1,9 @@
 {% extends 'base_doctor.html' %}
 {% block content %}
-    <h1>Viewing My Past Appointments</h1>
-    <br>
-
+<div class="jumbotron">
+    <h1 class="display-7">Previous Appointments</h1>
+    <hr class="my-3">
+</div>
     {% if appts %}  
         <ul>   
             {% for a in appts %}  
