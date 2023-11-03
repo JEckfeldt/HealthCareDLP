@@ -17,7 +17,7 @@ class Patient(AbstractBaseUser):
     # patient info all healthcare can see
     #id = models.BigAutoField(primary_key=True)
     username = models.CharField(max_length=100, default = '', unique=True)
-    password = models.CharField(max_length=25, default='')
+    password = models.CharField(max_length=129, default='')
     createdAt = models.DateTimeField(auto_now_add=True) # time the patient was created
     lastUpdated = models.DateTimeField(auto_now=True) # time the patient info was last edited
     fname = models.CharField(max_length=50)

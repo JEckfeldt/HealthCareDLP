@@ -1,18 +1,27 @@
 {% extends 'base_doctor.html' %}
 {% block content %}
-<div class="jumbotron">
-    <h1 class="display-7">Previous Appointments</h1>
-    <hr class="my-3">
-</div>
+    <h1>Viewing My Past Appointments</h1>
+    <br>
+
     {% if appts %}  
         <ul>   
             {% for a in appts %}  
                
-                Appointment Date: {{a.apptDate}}  <br>
-                Patient Name: {{a.patient.lname}}, {{a.patient.fname}}<br>
-                Doctor Notes: {{ a.docNotes }} <br>
-                Patient Notes: {{ a.patientNotes }} <br>
-                <br><br>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"> {{a.apptDate}} </h5>
+                    <p class="card-text"> Physician Notes: {{ a.docNotes }}</p>
+                    <p class="card-text"> Patient Notes: {{ a.patientNotes }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Physician: {{a.staffUser}}</li>
+                    <li class="list-group-item">Patient: {{a.patient}}</li>
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'editAppointmentDoctor' patientUsername=a.patient.username apptID=a.id %}" class="card-link">Edit Appointment</a>
+                    
+                </div>
+            </div>
 
             {% endfor %}  
         </ul>   

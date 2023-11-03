@@ -1,23 +1,33 @@
 {% extends 'base_patient.html' %}
 {% block content %}
-    <h1>Viewing My Upcoming Appointments</h1>
-    <br>
+<h1>Viewing My Upcoming Appointments</h1>
+<br>
 
-    {% if appts %}  
-        <ul>   
-            {% for a in appts %}  
-               
-                Appointment Date: {{a.apptDate}}  <br>
-                Doctor Notes: {{ a.docNotes }} <br>
-                Patient Notes: {{ a.patientNotes }} <br>
-                Attending Physician: {{ a.staffUser }}
-                <div class="card-action">
-                    <a href="{% url 'editAppointmentPatient' patientUsername=user.username apptID=a.id %}"> Edit Appointment</a> <br>
-                </div>
-                <br><br>
+{% if appts %}
+<ul>
+    {% for a in appts %}
 
-            {% endfor %}  
-        </ul>   
-    {% endif %}
-    
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title"> {{a.apptDate}} </h5>
+            <p class="card-text"> Physician Notes: {{ a.docNotes }}</p>
+            <p class="card-text"> Patient Notes: {{ a.patientNotes }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Physician: {{a.staffUser}}</li>
+            <li class="list-group-item">Patient: {{a.patient}}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'editAppointmentPatient' patientUsername=user.username apptID=a.id %}"
+                class="card-link">Edit Appointment</a>
+
+        </div>
+    </div>
+
+
+
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% endblock content %}

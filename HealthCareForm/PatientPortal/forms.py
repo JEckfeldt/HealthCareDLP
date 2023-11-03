@@ -10,7 +10,7 @@ class NewPatientForm(UserCreationForm):
 
     class Meta:
         model = Patient
-        exclude = ('createdAt', 'lastUpdated','allergies', 'history', 'symptoms', 'last_login', 'password')
+        exclude = ('createdAt', 'lastUpdated','allergies', 'history', 'symptoms', 'last_login', 'password', 'phone', 'is_patient', 'is_doctor',)
 
     username = forms.CharField(label='username', min_length=5, max_length=100) 
     password1 = forms.CharField(label='password', widget=forms.PasswordInput)  
@@ -49,7 +49,7 @@ class NewPatientForm(UserCreationForm):
     
     def save(self, commit = True):  
         user = Patient()
-        user.phone = 000000000
+        user.phone = 0000000000
         user.ssn = self.cleaned_data['ssn']
         user.address = self.cleaned_data['address']
         user.username = self.cleaned_data['username']
@@ -68,7 +68,7 @@ class NewPatientForm(UserCreationForm):
         user.is_patient = True
         user.set_password(self.cleaned_data['password2'])
         user.is_active = True
-        user.save()
+        #user.save()
         return user 
     
 

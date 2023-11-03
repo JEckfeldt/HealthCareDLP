@@ -20,13 +20,13 @@ def our_login(request):
 
 # home view
 def doctorHome(request):
-    #newDoc = Patient()
+   # newDoc = Patient()
     #newDoc.phone = 000000000
-    #newDoc.ssn = 000000000
+   # newDoc.ssn = 000000000
     #newDoc.address = 2905
     #newDoc.username = "testDoc3"
     #newDoc.password = "Loki98012"
-    #ewDoc.createdAt = date.today()
+   # newDoc.createdAt = date.today()
     #newDoc.lastUpdated = date.today()
     #newDoc.fname = "Tony"
     #newDoc.lname = "Fauci"
@@ -170,7 +170,7 @@ def addDiagnosis(request):
 def logoutDoctor(request):
     current_user = request.user
     logout(request)
-    return HttpResponseRedirect('/login')
+    return HttpResponseRedirect('/')
 
 def editProfileDoctor(request, patientUsername):
     current_user = request.user

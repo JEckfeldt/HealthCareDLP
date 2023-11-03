@@ -6,21 +6,44 @@
 </div>
 <br>
 
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-10">
+        
+
+    
+
     {% if appts %}  
-        <ul>   
+        <ul>
+            
             {% for a in appts %}  
-               
-                Appointment Date: {{a.apptDate}}  <br>
-                Patient Name: {{a.patient.lname}}, {{a.patient.fname}}<br>
-                Doctor Notes: {{ a.docNotes }} <br>
-                Patient Notes: {{ a.patientNotes }} <br>
-                <div class="card-action">
-                    <a href="{% url 'editAppointmentDoctor' patientUsername=a.patient.username apptID=a.id %}"> Edit Appointment</a> <br>
+
+            <div class="d-flex flex-row">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"> {{a.apptDate}} </h5>
+                    <p class="card-text"> Physician Notes: {{ a.docNotes }}</p>
+                    <p class="card-text"> Patient Notes: {{ a.patientNotes }}</p>
                 </div>
-                <br><br>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Physician: {{a.staffUser}}</li>
+                    <li class="list-group-item">Patient: {{a.patient}}</li>
+                </ul>
+                <div class="card-body">
+                    <a href="{% url 'editAppointmentDoctor' patientUsername=a.patient.username apptID=a.id %}" class="card-link">Edit Appointment</a>
+                    
+                </div>
+            </div>
+        </div>
 
             {% endfor %}  
+            </div>   
         </ul>   
     {% endif %}
+</div>
+</div>
+
+</div>
     
 {% endblock content %}
