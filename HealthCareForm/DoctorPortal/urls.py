@@ -34,4 +34,7 @@ urlpatterns = [
     path('editProfileDoctor/<str:patientUsername>/', views.editProfileDoctor, name='editProfileDoctor'),
     path('editAppointmentDoctor/<str:patientUsername>/<int:apptID>', views.editAppointmentDoctor, name='editAppointmentDoctor'),
     path('viewProfileDoctor/<str:patientUsername>', views.viewProfileDoctor, name='viewProfileDoctor'),
+    path('viewProfileDoctorSecure/<str:patientUsername>', views.viewProfileDoctorSecure, name='viewProfileDoctorSecure'),
+    path('textReveal', views.textReveal, name='textReveal'),
+    path('confirmPassword/<str:patientUsername>', views.confirmPassword, name='confirmPassword'),
 ]

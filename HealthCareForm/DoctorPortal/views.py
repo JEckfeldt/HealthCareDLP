@@ -4,11 +4,12 @@ from .models import *
 from django.contrib.auth import authenticate, login, logout
 from . import logging
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
 from .forms import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.hashers import check_password
 
 
 #from PatientPortal.views import loginUser
@@ -211,6 +212,16 @@ def viewProfileDoctor(request, patientUsername):
     diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
     return render(request, 'viewProfile_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
 
+def viewProfileDoctorSecure(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    return render(request, 'viewProfileSecure_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+
+
 def editAppointmentDoctor(request, patientUsername, apptID):
     current_user = request.user
     if (current_user.is_doctor == False):
@@ -230,7 +241,41 @@ def editAppointmentDoctor(request, patientUsername, apptID):
     #logging.debug("PatientNotes from chosenAppt: " + chosenAppt.patientNotes)
     return render(request, 'editAppointments_patient.html', context = {'appt': chosenAppt, 'user': current_user, 'form': form})
 
+def confirmPassword(request, patientUsername):
+    current_user = request.user
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    form = confirmPasswordForm(data=request.POST or None)
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    if (request.method == 'POST' and form.is_valid()):
+        #form = confirmPasswordForm(data=request.POST)
+        temp = form.cleaned_data['password']
+        temp2 = current_user.password
+        logging.debug(temp)
+        logging.debug(temp2)
+        if check_password(temp, current_user.password):
+            form2 = EditProfileFormDoctor(user=current_user, instance=chosenPatient)  
+            context = {  
+                'form':form2, 'user': current_user, 'patient': chosenPatient
+            }  
+            url = reverse('editProfileDoctor', kwargs={'patientUsername': patientUsername})
+            #return redirect(mystr)
+            return HttpResponseRedirect(url)
+            #return render(request, 'editProfile_doctor.html', context)
+        else:
+            return render(request, 'viewProfileSecure_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+    else:
+        print(form.errors.as_data())
+        #return render(request, 'viewProfileSecure_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+    return render(request, 'confirmPasswordDoctor.html', context = {'form': form, 'user': current_user})
 
-
-
-
+def textReveal(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    return render(request, 'viewProfile_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})

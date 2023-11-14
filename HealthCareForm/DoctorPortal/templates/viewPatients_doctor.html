@@ -10,7 +10,7 @@
         <ul>   
             {% for p in patients %}  
                
-            <a class="widelink" href="{% url 'viewProfileDoctor' patientUsername=p.patient.username %}">{{p.patient.username}} </a> <br>
+            <a class="widelink" href="{% url 'viewProfileDoctorSecure' patientUsername=p.patient.username %}">{{p.patient.username}} </a> <br>
 
                 {% endfor %}
                 <a href="/addPatient">Add New Patient</a> <br>

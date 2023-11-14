@@ -134,7 +134,8 @@ class EditProfileFormDoctor(forms.ModelForm):
 
 
 
-        
+class confirmPasswordForm(forms.Form):
+    password = forms.CharField(max_length=63, widget=forms.PasswordInput)
 
 
 
