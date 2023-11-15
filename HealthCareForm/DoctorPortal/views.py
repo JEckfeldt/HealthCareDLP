@@ -3,6 +3,7 @@ from .doctor_form import DoctorForm
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from . import logging
+import datetime
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,7 +11,8 @@ from datetime import date
 from .forms import *
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.hashers import check_password
-
+logger=logging.getLogger('custom')
+current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 #from PatientPortal.views import loginUser
 
@@ -121,6 +123,7 @@ def scheduleAppointmentDoctor(request):
             newAppt.staffUser = current_user
             newAppt.save()
             logging.debug("Successfully created a new appointment.")
+            logger.info(f"Doctor {current_user} added a appointment with patient {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
             return redirect('doctorHome')
     else:  
         form = AppointmentFormDoctor(user=current_user)  
@@ -159,6 +162,7 @@ def addDiagnosis(request):
             newDiagnosis = form
             newDiagnosis.staffUser = current_user
             newDiagnosis.save()
+            logger.info(f"Doctor {current_user} added a diagnosis for patient {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
             logging.debug("Successfully created a new diagnosis.")
             return redirect('doctorHome')
     else:  
@@ -171,6 +175,7 @@ def addDiagnosis(request):
 def logoutDoctor(request):
     current_user = request.user
     logout(request)
+    logger.info(f"{current_user} logged out Date/Time: {current_datetime}")
     return HttpResponseRedirect('/login')
 
 def editProfileDoctor(request, patientUsername):
@@ -193,7 +198,9 @@ def editProfileDoctor(request, patientUsername):
             logging.debug(form.cleaned_data['allergies'])
             logging.debug(form.cleaned_data['history'])
             logging.debug("Successfully edited patient")
+            logger.info(f"Doctor {current_user} edited patient profile {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
             return redirect('viewPatients')
+            
         else:
             return redirect('doctorHome')
     else:  
@@ -235,6 +242,7 @@ def editAppointmentDoctor(request, patientUsername, apptID):
             chosenAppt.docNotes = form.cleaned_data['docNotes']
             chosenAppt.patient = form.cleaned_data['mypatient']
             chosenAppt.save()
+            logger.info(f"Doctor {current_user} edited patient appointment for {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
         return redirect(viewFutureApppointmentsDoctor)
     else:
         form = AppointmentFormDoctor(user=current_user, instance=chosenAppt)    

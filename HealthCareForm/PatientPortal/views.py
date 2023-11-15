@@ -3,6 +3,7 @@ from DoctorPortal.models import *
 from django.contrib.auth import authenticate, login, logout
 from .forms import NewPatientForm, LoginForm, AppointmentFormPatient, EditProfileFormPatient
 from . import logging
+import datetime
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,6 +11,8 @@ from DoctorPortal.views import doctorHome
 from django.http import HttpResponseRedirect
 from datetime import date
 
+logger=logging.getLogger('custom')
+current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 class CreatePatient(LoginRequiredMixin, CreateView):
     model = Patient
     fields = ['username', 'password', 'phone', 'ssn', 'fname', 'lname', 'sex', 'age', 'weight' ]
@@ -33,6 +36,7 @@ def loginUser(request):
             )
 
         if user is not None:
+            logger.info(f"User {form.cleaned_data['username']} logged in successfully at {current_datetime}!")
             logging.debug("Successful Login! Welcome!")
             login(request, user)
             messege = f"Successful Login! Welcome!"
@@ -41,6 +45,7 @@ def loginUser(request):
             if user.is_doctor == True:
                 return redirect('doctorHome')
         else:
+            logger.info(f"login failed for user {form.cleaned_data['username']} at {current_datetime}")
             message = "Login Failed"
     return render(request, 'loginUser.html', context={'form': form, 'message': message})
 
@@ -60,9 +65,11 @@ def register(request):
             user.is_active = True
             user.save()
             logging.debug("Sucessfully added the user!")
+            logger.info(f"Successfully added the user! {form.cleaned_data['username']} Date/Time: {current_datetime}")
             #return redirect('/login')
         else:
             logging.debug("Entering form is INVALID!")
+            logger.info(f"Failed to register user {form.cleaned_data['username']} Date/Time: {current_datetime}")
             #logging.debug(form.error_messages)
             logging.debug(form.errors.as_data())
             #logging.debug(form.username)
@@ -79,12 +86,14 @@ def patientHome(request):
     current_user = request.user
     logging.debug(current_user.username)
     if request.user.is_authenticated:
+        logger.info(f"Authentication successful for patient {current_user} at {current_datetime}")
         logging.debug("User is authenticated!")
         current_user = request.user
         today = date.today()
         myAppts = Appointments.objects.filter(patient=current_user, apptDate__gte=today)
         return render(request, "homePage_patient.html", context = {'user': current_user, "appts": myAppts})
     else:
+        logger.info(f"Authentication not successful for patient {current_user} at {current_datetime}")
         logging.debug("ERROR: USER Not AUtHENTICATED")
     
     # return render(request, 'homePage_patient.html', context = {'user': current_user})
@@ -97,6 +106,7 @@ def viewProfile(request):
 def logoutPatient(request):
     current_user = request.user
     logout(request)
+    logger.info(f"{current_user} logged out Date/Time: {current_datetime}")
     return redirect('login')
 
 def scheduleAppointmentPatient(request):
@@ -107,6 +117,7 @@ def scheduleAppointmentPatient(request):
             newAppt = form
             newAppt.patient = current_user
             newAppt.save()
+            logger.info(f"Patient {current_user} scheduled appointment with {form.cleaned_data['mydoctor']} Date/Time: {current_datetime}")
             logging.debug("Successfully created a new appointment.")
             return redirect('patientHome')
     else:  
@@ -143,6 +154,7 @@ def editAppointmentPatient(request, patientUsername, apptID):
             chosenAppt.patientNotes = form.cleaned_data['patientNotes']
             chosenAppt.staffUser = form.cleaned_data['mydoctor']
             chosenAppt.save()
+        logger.info(f"Patient {current_user} edited appointment with {form.cleaned_data['mydoctor']}  Date/Time: {current_datetime}")
         return redirect(viewFutureApppointmentsPatient)
     else:
         form = AppointmentFormPatient(user=current_user, instance=chosenAppt)    
@@ -162,6 +174,7 @@ def editProfilePatient(request):
             chosenProfile.age = form.cleaned_data['age']
             chosenProfile.weight = form.cleaned_data['weight']
             chosenProfile.save()
+            logger.info(f"Patient {current_user} edited their profile Date/Time: {current_datetime}")
             return redirect(viewProfile)
     else:
         form = EditProfileFormPatient(user=current_user, instance=chosenProfile)
