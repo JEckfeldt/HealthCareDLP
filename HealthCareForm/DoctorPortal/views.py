@@ -11,6 +11,10 @@ from datetime import date
 from .forms import *
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.hashers import check_password
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django_otp.plugins.otp_totp.models import TOTPDevice
+from .forms import Enable2FAForm
 logger=logging.getLogger('custom')
 current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -287,3 +291,19 @@ def textReveal(request, patientUsername):
     chosenPatient = chosenPatient1[0]
     diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
     return render(request, 'viewProfile_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+
+
+@login_required
+def enable_2fa(request):
+    if request.method == 'POST': #we need to enable 2fa for this user
+        form = Enable2FAForm(request.user, request.POST)
+        if form.is_valid():
+            #enable 2FA for the user
+            device = TOTPDevice.objects.create(user=request.user)
+            device.save()
+            logging.debug(f"enabled the 2fa form for user {request.user}")
+            return redirect('verify_2fa')
+    else: #otherwise we can simply return the form to the user
+        form = Enable2FAForm(request.user)
+
+    return render(request, 'enable_2fa.html', {'form': form})
