@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.base_user import BaseUserManager
 from .managers import PatientManager, DoctorManager
+from django_otp.plugins.otp_totp.models import TOTPDevice
 
 # all models have a built in field "primary key" which is their unique id
 
@@ -52,6 +53,7 @@ class Doctor(AbstractBaseUser):
     #id = models.BigAutoField(primary_key=True)
     username = models.CharField(max_length=100, default = '', unique=True)
     password = models.CharField(max_length=25, default='')
+    devices = models.ManyToManyField(TOTPDevice)
     fname = models.CharField(max_length=50, default='')
     lname = models.CharField(max_length=50, default='')
     specialty = models.CharField(max_length=50, default='')
