@@ -14,7 +14,11 @@ from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django_otp.plugins.otp_totp.models import TOTPDevice
+from django_otp.plugins.otp_totp.views import TOTPVerificationView
 from .forms import Enable2FAForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django_otp.plugins.otp_totp.models import TOTPDevice
 logger=logging.getLogger('custom')
 current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -307,3 +311,12 @@ def enable_2fa(request):
         form = Enable2FAForm(request.user)
 
     return render(request, 'enable_2fa.html', {'form': form})
+
+@login_required
+def verify_2fa(request):
+    if request.method == 'POST':
+        # Handle the 2FA verification form submission
+        return TOTPVerificationView.as_view()(request)
+
+    devices = TOTPDevice.objects.filter(user=request.user)
+    return render(request, 'verify_2fa.html', {'devices': devices})

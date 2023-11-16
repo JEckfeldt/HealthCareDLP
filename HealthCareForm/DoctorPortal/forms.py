@@ -138,8 +138,11 @@ class confirmPasswordForm(forms.Form):
     password = forms.CharField(max_length=63, widget=forms.PasswordInput)
 
 
+class Enable2FAForm(forms.Form):
+    pass
 
-
+class TOTPVerificationView(forms.Form):
+    pass
 
 
 
