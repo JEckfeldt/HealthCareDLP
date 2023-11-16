@@ -198,7 +198,7 @@ def editProfileDoctor(request, patientUsername):
             logging.debug(form.cleaned_data['allergies'])
             logging.debug(form.cleaned_data['history'])
             logging.debug("Successfully edited patient")
-            logger.info(f"Doctor {current_user} edited patient profile {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
+            logger.info(f"Doctor {current_user} edited patient profile {chosenPatient}  Date/Time: {current_datetime}")
             return redirect('viewPatients')
             
         else:
