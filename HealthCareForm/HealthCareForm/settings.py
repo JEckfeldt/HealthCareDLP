@@ -115,6 +115,7 @@ AUTHENTICATION_BACKENDS = (
     # ...
     'django_otp.backends.OTPAuthenticationBackend',
 )
+OTP_TOTP_ISSUER = 'HealthCare DLP'
 
 LOGGING = {
     'version': 1,
