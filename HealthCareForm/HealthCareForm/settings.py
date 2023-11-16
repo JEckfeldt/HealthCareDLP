@@ -22,6 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-=v*j^mw5+6r3%c!cmr3op$r&wmwor#nq^x$e1jj-m=8bj04-m@'
+import os
+import base64
+
+FIELD_ENCRYPTION_KEY='sfgf8SNOtqJ_4WuEKCfpvjwzCh8av3gAuzRa9NFoumc='
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'encrypted_model_fields',
 
     # Created Apps
     'DoctorPortal',
