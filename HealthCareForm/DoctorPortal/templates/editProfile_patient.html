@@ -5,7 +5,7 @@
   <hr class="my-3">
 </div>
 <br>
-    <form method="post">
+    <form method="post" class="myformy">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Save Changes</button>

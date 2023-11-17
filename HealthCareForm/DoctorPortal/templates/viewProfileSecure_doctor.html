@@ -18,42 +18,42 @@
                 <tbody>
                     <tr>
                         <th scope="row">Name</th>
-                        <td> {{ patient.lname }}, {{ patient.fname }} </td>
+                        <td> ***************** </td>
                     </tr>
                     <tr>
                         <th scope="row">Address</th>
-                        <td>{{ patient.address }}</td>
+                        <td>***************** </td>
                     </tr>
                     <tr>
                         <th scope="row">Phone Number</th>
-                        <td>{{ patient.phone }}</td>
+                        <td>***************** </td>
                     </tr>
                     <tr>
                         <th scope="row">Age</th>
-                        <td>{{ patient.age }}</td>
+                        <td>** </td>
                     </tr>
                     <tr>
                         <th scope="row">Sex</th>
-                        <td>{{ patient.sex }}</td>
+                        <td>*</td>
                     </tr>
                     <tr>
                         <th scope="row">Allergies</th>
-                        <td>{{ patient.allergies }}</td>
+                        <td>***************** </td>
                     </tr>
                     <tr>
                         <th scope="row">History</th>
-                        <td>{{ patient.history }}</td>
+                        <td>***************** </td>
                     </tr>
                     <tr>
                         <th scope="row">Symptoms</th>
-                        <td>{{ patient.symptoms }}</td>
+                        <td>***************** </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="card-action">
-            <a href="{% url 'viewProfileDoctorSecure' patientUsername=patient.username %}">Hide Information</a>
+            <a href="{% url 'viewProfileDoctor' patientUsername=patient.username %}">Show Information</a>
         </div>
  
         <div class="patient-diagnoses"><br>
@@ -63,11 +63,11 @@
                     {% for d in diagnoses %}
                         <li class="list-group-item">
                             <h3>Name:</h3>
-                            <p>{{ d.diagnosis }}</p>
+                            <p>***************** </p>
                             <h3>Notes:</h3>
-                            <p>{{ d.docNotes }}</p>
+                            <p>***************** </p>
                             <h3>Created At:</h3>
-                            <p>{{ d.createdAt }}</p>
+                            <p>***************** </p>
                         </li><br>
                     {% endfor %}
                 </ul>

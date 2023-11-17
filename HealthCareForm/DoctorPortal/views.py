@@ -3,13 +3,16 @@ from .doctor_form import DoctorForm
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from . import logging
+import datetime
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
 from .forms import *
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.hashers import check_password
+logger=logging.getLogger('custom')
+current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 #from PatientPortal.views import loginUser
 
@@ -20,27 +23,27 @@ def our_login(request):
 
 # home view
 def doctorHome(request):
-    #newDoc = Patient()
-    #newDoc.phone = 000000000
-    #newDoc.ssn = 000000000
-    #newDoc.address = 2905
-    #newDoc.username = "testDoc3"
-    #newDoc.password = "Loki98012"
-    #ewDoc.createdAt = date.today()
-    #newDoc.lastUpdated = date.today()
-    #newDoc.fname = "Tony"
-    #newDoc.lname = "Fauci"
-    #newDoc.sex = "M"
-    #newDoc.symptons = ""
-    #newDoc.age = 45
-    #newDoc.weight = 160
-    #newDoc.allergies = ""
-    #newDoc.history = ""
-    #newDoc.is_doctor = True
-    #newDoc.is_patient = False
-    #newDoc.set_password("Loki98012")
-    #newDoc.is_active = True
-    #newDoc.save()
+    # newDoc = Patient()
+    # newDoc.phone = 000000000
+    # newDoc.ssn = 000000000
+    # newDoc.address = 2905
+    # newDoc.username = "testDoc3"
+    # newDoc.password = "Loki98012"
+    # newDoc.createdAt = date.today()
+    # newDoc.lastUpdated = date.today()
+    # newDoc.fname = "Tony"
+    # newDoc.lname = "Fauci"
+    # newDoc.sex = "M"
+    # newDoc.symptons = ""
+    # newDoc.age = 45
+    # newDoc.weight = 160
+    # newDoc.allergies = ""
+    # newDoc.history = ""
+    # newDoc.is_doctor = True
+    # newDoc.is_patient = False
+    # newDoc.set_password("Loki98012")
+    # newDoc.is_active = True
+    # newDoc.save()
     current_user = request.user
     logging.debug(current_user.username)
     if request.user.is_authenticated:
@@ -120,6 +123,7 @@ def scheduleAppointmentDoctor(request):
             newAppt.staffUser = current_user
             newAppt.save()
             logging.debug("Successfully created a new appointment.")
+            logger.info(f"Doctor {current_user} added a appointment with patient {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
             return redirect('doctorHome')
     else:  
         form = AppointmentFormDoctor(user=current_user)  
@@ -158,6 +162,7 @@ def addDiagnosis(request):
             newDiagnosis = form
             newDiagnosis.staffUser = current_user
             newDiagnosis.save()
+            logger.info(f"Doctor {current_user} added a diagnosis for patient {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
             logging.debug("Successfully created a new diagnosis.")
             return redirect('doctorHome')
     else:  
@@ -170,6 +175,7 @@ def addDiagnosis(request):
 def logoutDoctor(request):
     current_user = request.user
     logout(request)
+    logger.info(f"{current_user} logged out Date/Time: {current_datetime}")
     return HttpResponseRedirect('/login')
 
 def editProfileDoctor(request, patientUsername):
@@ -192,7 +198,9 @@ def editProfileDoctor(request, patientUsername):
             logging.debug(form.cleaned_data['allergies'])
             logging.debug(form.cleaned_data['history'])
             logging.debug("Successfully edited patient")
+            logger.info(f"Doctor {current_user} edited patient profile {chosenPatient}  Date/Time: {current_datetime}")
             return redirect('viewPatients')
+            
         else:
             return redirect('doctorHome')
     else:  
@@ -211,6 +219,16 @@ def viewProfileDoctor(request, patientUsername):
     diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
     return render(request, 'viewProfile_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
 
+def viewProfileDoctorSecure(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    return render(request, 'viewProfileSecure_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+
+
 def editAppointmentDoctor(request, patientUsername, apptID):
     current_user = request.user
     if (current_user.is_doctor == False):
@@ -224,13 +242,48 @@ def editAppointmentDoctor(request, patientUsername, apptID):
             chosenAppt.docNotes = form.cleaned_data['docNotes']
             chosenAppt.patient = form.cleaned_data['mypatient']
             chosenAppt.save()
+            logger.info(f"Doctor {current_user} edited patient appointment for {form.cleaned_data['mypatient']}  Date/Time: {current_datetime}")
         return redirect(viewFutureApppointmentsDoctor)
     else:
         form = AppointmentFormDoctor(user=current_user, instance=chosenAppt)    
     #logging.debug("PatientNotes from chosenAppt: " + chosenAppt.patientNotes)
     return render(request, 'editAppointments_patient.html', context = {'appt': chosenAppt, 'user': current_user, 'form': form})
 
+def confirmPassword(request, patientUsername):
+    current_user = request.user
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    form = confirmPasswordForm(data=request.POST or None)
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    if (request.method == 'POST' and form.is_valid()):
+        #form = confirmPasswordForm(data=request.POST)
+        temp = form.cleaned_data['password']
+        temp2 = current_user.password
+        logging.debug(temp)
+        logging.debug(temp2)
+        if check_password(temp, current_user.password):
+            form2 = EditProfileFormDoctor(user=current_user, instance=chosenPatient)  
+            context = {  
+                'form':form2, 'user': current_user, 'patient': chosenPatient
+            }  
+            url = reverse('editProfileDoctor', kwargs={'patientUsername': patientUsername})
+            #return redirect(mystr)
+            return HttpResponseRedirect(url)
+            #return render(request, 'editProfile_doctor.html', context)
+        else:
+            return render(request, 'viewProfileSecure_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+    else:
+        print(form.errors.as_data())
+        #return render(request, 'viewProfileSecure_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})
+    return render(request, 'confirmPasswordDoctor.html', context = {'form': form, 'user': current_user})
 
-
-
-
+def textReveal(request, patientUsername):
+    current_user = request.user
+    if (current_user.is_doctor == False):
+        return HttpResponseRedirect('/login')
+    chosenPatient1 = Patient.objects.filter(username=patientUsername)
+    chosenPatient = chosenPatient1[0]
+    diagnoses = Diagnosis.objects.filter(patient=chosenPatient)
+    return render(request, 'viewProfile_doctor.html', context = {'patient': chosenPatient, 'user': current_user, 'diagnoses': diagnoses})

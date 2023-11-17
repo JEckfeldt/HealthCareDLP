@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-=v*j^mw5+6r3%c!cmr3op$r&wmwor#nq^x$e1jj-m=8bj04-m@'
+import os
+import base64
+
+FIELD_ENCRYPTION_KEY='sfgf8SNOtqJ_4WuEKCfpvjwzCh8av3gAuzRa9NFoumc='
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'encrypted_model_fields',
 
     # Created Apps
     'DoctorPortal',
@@ -79,8 +86,12 @@ WSGI_APPLICATION = 'HealthCareForm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'HealthCareApp', 
+        'USER': 'postgres', 
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1', 
+        'PORT': '5432',
     }
 }
 
@@ -102,6 +113,44 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
+        },
+        'security_file': {
+            'level': 'INFO',  # Set appropriate level for security events
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/security.log'),  # Separate log file for security events
+        },
+    },
+    'loggers': {
+        'django.security': {
+            'handlers': ['security_file'],
+            'level': 'INFO',  # Set appropriate level for security events
+            'propagate': False,
+        },
+
+        'custom': {
+            'handlers': ['file'],
+            'level': 'INFO',  
+            'propagate': False,
+        }
+        
+    },
+}
+
+
+
+
+
+
+
 
 
 # Internationalization
