@@ -139,10 +139,11 @@ class confirmPasswordForm(forms.Form):
 
 
 class Enable2FAForm(forms.Form):
+    #still working on fields, need to test build first
     pass
 
 class TOTPVerificationView(forms.Form):
-    pass
+    mfa_code = forms.IntegerField(max_value=6)
 
 
 
