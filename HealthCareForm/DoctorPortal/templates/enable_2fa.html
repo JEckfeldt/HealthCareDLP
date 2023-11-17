@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Enable Two-Factor Authentication (2FA)</h2>
+  <p>Follow these steps to enable 2FA for your account:</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enable 2FA</button>
+  </form>
+  
+  <a href="{% url 'verify_2fa' %}">Already enabled 2FA? Verify it here.</a>
+{% endblock %}
