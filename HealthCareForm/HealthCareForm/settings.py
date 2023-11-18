@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from logging.handlers import RotatingFileHandler
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -121,13 +121,17 @@ LOGGING = {
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
+            'maxBytes': 1024*1024,  
+            'backupCount': 5, 
         },
         'security_file': {
             'level': 'INFO',  # Set appropriate level for security events
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/security.log'),  # Separate log file for security events
+            'maxBytes': 1024*1024,
+            'backupCount': 5,
         },
     },
     'loggers': {
