@@ -1,0 +1,14 @@
+{% extends 'base_doctor.html' %}
+{% block content %}
+<div class="jumbotron">
+  <h1 class="display-7">Edit Appointment</h1>
+  <hr class="my-3">
+</div>
+
+    <form method="post" class="myformy">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+      </form>
+    
+{% endblock content %}

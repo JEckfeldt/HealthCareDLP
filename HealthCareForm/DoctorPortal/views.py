@@ -247,7 +247,7 @@ def editAppointmentDoctor(request, patientUsername, apptID):
     else:
         form = AppointmentFormDoctor(user=current_user, instance=chosenAppt)    
     #logging.debug("PatientNotes from chosenAppt: " + chosenAppt.patientNotes)
-    return render(request, 'editAppointments_patient.html', context = {'appt': chosenAppt, 'user': current_user, 'form': form})
+    return render(request, 'editAppointments_doctor.html', context = {'appt': chosenAppt, 'user': current_user, 'form': form})
 
 def confirmPassword(request, patientUsername):
     current_user = request.user
