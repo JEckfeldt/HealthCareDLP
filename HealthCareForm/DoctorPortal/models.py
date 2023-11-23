@@ -12,7 +12,7 @@ from encrypted_model_fields.fields import EncryptedCharField,EncryptedTextField,
 class Patient(AbstractBaseUser):
     #private patient info
     phone = EncryptedIntegerField() # 1 (999)-999-9999 11 long
-    ssn = EncryptedCharField(unique=True) #ssn should be unique
+    ssn = EncryptedCharField(unique=True, max_length=9) #ssn should be unique
     address = EncryptedCharField(max_length=200, default= '')
 
     # patient info all healthcare can see
