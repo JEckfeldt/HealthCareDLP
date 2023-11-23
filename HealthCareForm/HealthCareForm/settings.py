@@ -70,10 +70,10 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
 ]
 
-LOGIN_URL = 'two_factor:login'
+LOGIN_URL = 'DoctorPortal:login'
 
 # # this one is optional
-# LOGIN_REDIRECT_URL = 'two_factor:profile'
+# LOGIN_REDIRECT_URL = 'DoctorPortal:login'
 
 ROOT_URLCONF = 'HealthCareForm.urls'
 

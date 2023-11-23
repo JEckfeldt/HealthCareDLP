@@ -16,10 +16,10 @@ current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 #from PatientPortal.views import loginUser
 
-#login 
+# #login 
 
-def our_login(request):
-    return render(request, 'login.html', {})
+def login(request):
+    return render(request, 'loginUser.html', {})
 
 # home view
 def doctorHome(request):

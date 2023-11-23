@@ -14,11 +14,20 @@
         <h1>Welcome to the Login Page</h1>
         <br>
         <p>{{ message }}</p>
-        <form method="post">
+        
+        <form method="post" action="{% url 'two_factor:login' %}">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit">Submit</button>
+        </form>
+        {% if user and user.is_verified %}
+            <p>You are already verified. You can proceed to your dashboard.</p>
+        {% endif %}
+        <!-- <form method="post">
             {{ form.as_p }}
             {% csrf_token %}
             <button type="submit" >Submit</button>
-        </form>
+        </form> -->
     </div>
 <!-- https://www.pexels.com/photo/woman-wearing-face-mask-and-gloves-8949835/ -->
 <!-- https://www.pexels.com/photo/a-medical-practitioner-showing-a-patient-paper-7578808/ -->

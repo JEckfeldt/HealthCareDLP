@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.urls import path, include
 from . import views
+from two_factor.urls import urlpatterns as tf_urls
 #app_name='patient'
 
 urlpatterns = [
+    path('', include(tf_urls)),
     path('register/', views.register, name='register'),
-    path('', views.loginUser, name='login'),
-    path('login/', views.loginUser, name='login'),
+    # path('', views.loginUser, name='login'),
+    # path('login/', views.loginUser, name='login'),
     path('patientHome/', views.patientHome, name='patientHome'),
     path('viewProfile', views.viewProfile, name='viewProfile'),
     path('logoutPatient', views.logoutPatient, name='logoutPatient'),
