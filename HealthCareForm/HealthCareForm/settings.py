@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from logging.handlers import RotatingFileHandler
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,6 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-=v*j^mw5+6r3%c!cmr3op$r&wmwor#nq^x$e1jj-m=8bj04-m@'
+import os
+import base64
+
+FIELD_ENCRYPTION_KEY='sfgf8SNOtqJ_4WuEKCfpvjwzCh8av3gAuzRa9NFoumc='
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'encrypted_model_fields',
 
     'django_otp',
     'django_otp.plugins.otp_totp',
@@ -117,19 +123,24 @@ AUTHENTICATION_BACKENDS = (
 )
 OTP_TOTP_ISSUER = 'HealthCare DLP'
 
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
+            'maxBytes': 1024*1024,  
+            'backupCount': 5, 
         },
         'security_file': {
             'level': 'INFO',  # Set appropriate level for security events
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/security.log'),  # Separate log file for security events
+            'maxBytes': 1024*1024,
+            'backupCount': 5,
         },
     },
     'loggers': {
@@ -141,13 +152,14 @@ LOGGING = {
 
         'custom': {
             'handlers': ['file'],
-            'level': 'INFO',  
+            'level': 'DEBUG',  
             'propagate': False,
         }
         
     },
 }
 
+ 
 
 
 
