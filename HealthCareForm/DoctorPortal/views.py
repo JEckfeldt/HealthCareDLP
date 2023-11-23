@@ -18,7 +18,6 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from .forms import Enable2FAForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django_otp.plugins.otp_totp.models import TOTPDevice
 logger=logging.getLogger('custom')
 current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
