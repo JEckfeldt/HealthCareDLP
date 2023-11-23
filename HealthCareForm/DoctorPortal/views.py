@@ -14,7 +14,7 @@ from django.contrib.auth.hashers import check_password
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django_otp.plugins.otp_totp.models import TOTPDevice
-from django_otp.plugins.otp_totp.views import TOTPVerificationView
+# from django_otp.plugins.otp_totp.views import TOTPVerificationView
 from .forms import Enable2FAForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
