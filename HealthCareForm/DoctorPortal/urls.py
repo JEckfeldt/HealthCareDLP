@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path, include
 from . import views
 from two_factor.urls import urlpatterns as tf_urls
+from django.contrib import admin
 #app_name='doctor'
 
 
@@ -38,4 +39,5 @@ urlpatterns = [
     path('viewProfileDoctorSecure/<str:patientUsername>', views.viewProfileDoctorSecure, name='viewProfileDoctorSecure'),
     path('textReveal', views.textReveal, name='textReveal'),
     path('confirmPassword/<str:patientUsername>', views.confirmPassword, name='confirmPassword'),
+    path('admin/', admin.site.urls),
 ]
