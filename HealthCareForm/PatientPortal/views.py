@@ -32,8 +32,9 @@ def loginUser(request):
         logging.debug("Password = {}".format(form.cleaned_data['password']))
         user = authenticate(
             username=form.cleaned_data['username'],
-            password=form.cleaned_data['password']
+            password=form.cleaned_data['password'],
             )
+        verification_code=form.cleaned_data['verification_code']
 
         if user is not None:
             logger.info(f"User {form.cleaned_data['username']} logged in successfully at {current_datetime}!")

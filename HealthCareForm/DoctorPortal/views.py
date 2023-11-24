@@ -43,6 +43,7 @@ def doctorHome(request):
     # newDoc.is_patient = False
     # newDoc.set_password("Loki98012")
     # newDoc.is_active = True
+    # newDoc.otp_verification_secret = 'base32secret3232'
     # newDoc.save()
     current_user = request.user
     logging.debug(current_user.username)
