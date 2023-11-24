@@ -29,7 +29,7 @@ class Patient(AbstractBaseUser):
     weight = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(2000)], default=None) # 1-2000lbs
     allergies = EncryptedTextField(default='na') # known allergies
     history = EncryptedTextField(default='na') # the medical history
-    otp_verification_secret = EncryptedCharField(max_length=50, default='')
+    otp_verification_secret = models.CharField(max_length=50, default='')
 
     is_patient = models.BooleanField('patientStatus', default=True)
     is_doctor = models.BooleanField('doctorStatus', default=False)
