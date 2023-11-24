@@ -24,28 +24,28 @@ def our_login(request):
 # home view
 def doctorHome(request):
     # Patient.objects.filter(username="TestDoc3").delete()
-    newDoc = Patient()
-    newDoc.phone = 000000000
-    newDoc.ssn = 000000000
-    newDoc.address = 2905
-    newDoc.username = "testDoc3"
-    newDoc.password = "Loki98012"
-    newDoc.createdAt = date.today()
-    newDoc.lastUpdated = date.today()
-    newDoc.fname = "Tony"
-    newDoc.lname = "Fauci"
-    newDoc.sex = "M"
-    newDoc.symptons = ""
-    newDoc.age = 45
-    newDoc.weight = 160
-    newDoc.allergies = ""
-    newDoc.history = ""
-    newDoc.is_doctor = True
-    newDoc.is_patient = False
-    newDoc.set_password("Loki98012")
-    newDoc.is_active = True
-    newDoc.otp_verification_secret = 'base32secret3232'
-    newDoc.save()
+    # newDoc = Patient()
+    # newDoc.phone = 000000000
+    # newDoc.ssn = 000000000
+    # newDoc.address = 2905
+    # newDoc.username = "testDoc3"
+    # newDoc.password = "Loki98012"
+    # newDoc.createdAt = date.today()
+    # newDoc.lastUpdated = date.today()
+    # newDoc.fname = "Tony"
+    # newDoc.lname = "Fauci"
+    # newDoc.sex = "M"
+    # newDoc.symptons = ""
+    # newDoc.age = 45
+    # newDoc.weight = 160
+    # newDoc.allergies = ""
+    # newDoc.history = ""
+    # newDoc.is_doctor = True
+    # newDoc.is_patient = False
+    # newDoc.set_password("Loki98012")
+    # newDoc.is_active = True
+    # newDoc.otp_verification_secret = 'base32secret3232'
+    # newDoc.save()
     current_user = request.user
     logging.debug(current_user.username)
     if request.user.is_authenticated:
