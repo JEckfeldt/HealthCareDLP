@@ -75,6 +75,7 @@ class NewPatientForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=63)
     password = forms.CharField(max_length=63, widget=forms.PasswordInput)
+    verification_code = forms.CharField(max_length=6)
 
 class DateInput(forms.DateInput):
     input_type = 'date'
