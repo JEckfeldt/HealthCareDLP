@@ -4,12 +4,32 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 
+vc = "662676"
 
 chromedriver_autoinstaller.install()
 
 #driver = webdriver.Chrome()
 #driver.get("http://www.python.org")
 #assert "Python" in driver.title
+
+class PatientTest(LiveServerTestCase):
+    driver = webdriver.Chrome()
+    driver.get("http://127.0.0.1:8000")
+    username = driver.find_element('name', 'username')
+    password = driver.find_element('name', 'password')
+    id_ver_code = driver.find_element('name', 'verification_code')
+
+    submit = driver.find_element('name', 'submit')
+
+    username.send_keys("niceGuy")
+    password.send_keys("Loki98012")
+    id_ver_code.send_keys(vc)
+
+    submit.send_keys(Keys.RETURN) 
+
+    h = driver.find_element(By.TAG_NAME, 'h5')
+    assert h.text == "Welcome, niceGuy"
+    
 
 class DoctorLoginTest(LiveServerTestCase):
 
@@ -26,7 +46,7 @@ class DoctorLoginTest(LiveServerTestCase):
 
         username.send_keys("testDoc4")
         password.send_keys("Loki98012")
-        id_ver_code.send_keys("640237")
+        id_ver_code.send_keys(vc)
 
         submit.send_keys(Keys.RETURN) 
 
@@ -201,6 +221,8 @@ class DoctorLoginTest(LiveServerTestCase):
         assert h.text == "Welcome, testDoc4"
 
         #successfully passed all tests
+
+
         
         
 
