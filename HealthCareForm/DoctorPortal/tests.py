@@ -4,7 +4,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 
-vc = "662676"
+#enter OTP code from your authenticator app, using secret: 'base32secret3232'
+#enter and run as soon as it refreshes to ensure second set of tests begins before reset.
+vc = "662676" 
 
 chromedriver_autoinstaller.install()
 

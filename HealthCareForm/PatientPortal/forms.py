@@ -111,5 +111,5 @@ class EditProfileFormPatient(forms.ModelForm):
     
     class Meta:
         model = Patient
-        exclude = ('createdAt', 'lastUpdated', 'last_login', 'password', 'username', 'fname', 'lname', 'is_patient', 'is_doctor', 'ssn', )
+        exclude = ('createdAt', 'lastUpdated', 'last_login', 'password', 'username', 'fname', 'lname', 'is_patient', 'is_doctor', 'ssn', 'otp_verification_secret',)
 
