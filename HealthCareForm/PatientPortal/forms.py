@@ -67,6 +67,7 @@ class NewPatientForm(UserCreationForm):
         user.is_doctor = False
         user.is_patient = True
         user.set_password(self.cleaned_data['password2'])
+        user.otp_verification_secret=self.cleaned_data['otp_verification_secret']
         user.is_active = True
         user.save()
         return user 
@@ -75,6 +76,7 @@ class NewPatientForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=63)
     password = forms.CharField(max_length=63, widget=forms.PasswordInput)
+    verification_code = forms.CharField(max_length=6)
 
 class DateInput(forms.DateInput):
     input_type = 'date'

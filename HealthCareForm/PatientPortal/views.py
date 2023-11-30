@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from DoctorPortal.views import doctorHome
 from django.http import HttpResponseRedirect
 from datetime import date
+import pyotp 
 
 logger=logging.getLogger('custom')
 current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -32,10 +33,16 @@ def loginUser(request):
         logging.debug("Password = {}".format(form.cleaned_data['password']))
         user = authenticate(
             username=form.cleaned_data['username'],
-            password=form.cleaned_data['password']
+            password=form.cleaned_data['password'],
             )
 
         if user is not None:
+            verification_code=form.cleaned_data['verification_code']
+            totp = pyotp.TOTP(user.otp_verification_secret)
+            if verification_code != totp.now(): #otp code doesn't match
+                logger.info(f"login failed for user {form.cleaned_data['username']} at {current_datetime} {verification_code} {totp.now()} {user.otp_verification_secret}")
+                message = "Login Failed"
+                return render(request, 'loginUser.html', context={'form': form, 'message': message})
             logger.info(f"User {form.cleaned_data['username']} logged in successfully at {current_datetime}!")
             logging.debug("Successful Login! Welcome!")
             login(request, user)
