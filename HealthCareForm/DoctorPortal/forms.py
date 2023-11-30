@@ -11,7 +11,7 @@ class NewDoctorForm(UserCreationForm):
 
     class Meta:
         model = Doctor
-        exclude = ('patients',)
+        exclude = ('patients', 'otp_verification_secret',)
 
     username = forms.CharField(label='username', min_length=5, max_length=100) 
     password1 = forms.CharField(label='password', widget=forms.PasswordInput)  
@@ -129,7 +129,7 @@ class EditProfileFormDoctor(forms.ModelForm):
     
     class Meta:
         model = Patient
-        exclude = ('createdAt', 'lastUpdated', 'staffUser', 'patient', 'updaterUsername', 'age', 'ssn', 'name', 'username', 'password', 'last_login', 'phone', 'address', 'fname', 'lname', 'is_doctor', 'is_patient', 'sex',)
+        exclude = ('createdAt', 'lastUpdated', 'staffUser', 'patient', 'updaterUsername', 'age', 'ssn', 'name', 'username', 'password', 'last_login', 'phone', 'address', 'fname', 'lname', 'is_doctor', 'is_patient', 'sex', 'otp_verification_secret',)
     
 
 

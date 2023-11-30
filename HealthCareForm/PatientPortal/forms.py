@@ -10,7 +10,7 @@ class NewPatientForm(UserCreationForm):
 
     class Meta:
         model = Patient
-        exclude = ('createdAt', 'lastUpdated','allergies', 'history', 'symptoms', 'last_login', 'password')
+        exclude = ('createdAt', 'lastUpdated','allergies', 'history', 'symptoms', 'last_login', 'password', 'otp_verification_secret',)
 
     username = forms.CharField(label='username', min_length=5, max_length=100) 
     password1 = forms.CharField(label='password', widget=forms.PasswordInput)  
@@ -67,7 +67,7 @@ class NewPatientForm(UserCreationForm):
         user.is_doctor = False
         user.is_patient = True
         user.set_password(self.cleaned_data['password2'])
-        user.otp_verification_secret=self.cleaned_data['otp_verification_secret']
+        user.otp_verification_secret='base32secret3232'
         user.is_active = True
         user.save()
         return user 

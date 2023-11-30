@@ -53,8 +53,8 @@ def doctorHome(request):
     else:
         logging.debug("ERROR: USER Not AUtHENTICATED")
     
-    if (current_user.is_doctor == False):
-        return HttpResponseRedirect('/login')
+    #if (current_user.is_doctor == False):
+        #return HttpResponseRedirect('/login')
     # get upcoming appointments
     today = date.today()
     myAppts = Appointments.objects.filter(staffUser=current_user, apptDate__gte=today)
@@ -116,8 +116,8 @@ def viewPatients(request):
 
 def scheduleAppointmentDoctor(request):
     current_user = request.user
-    if (current_user.is_doctor == False):
-        return HttpResponseRedirect('/login')
+    #if (current_user.is_doctor == False):
+        #return HttpResponseRedirect('/login')
     if request.method == 'POST':
         form = AppointmentFormDoctor(user=current_user, data=request.POST)
         if form.is_valid():
@@ -233,8 +233,8 @@ def viewProfileDoctorSecure(request, patientUsername):
 
 def editAppointmentDoctor(request, patientUsername, apptID):
     current_user = request.user
-    if (current_user.is_doctor == False):
-        return HttpResponseRedirect('/login')
+    #if (current_user.is_doctor == False):
+        #return HttpResponseRedirect('/login')
     chosenAppt1 = Appointments.objects.filter(id = apptID)
     chosenAppt = chosenAppt1[0]
     if (request.method == 'POST'):

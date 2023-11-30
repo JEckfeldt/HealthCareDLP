@@ -3,6 +3,6 @@
 <form method="post" class="myformy">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="submitbutton">Schedule Appointment</button>
+    <button name="submit" type="submit" class="submitbutton">Schedule Appointment</button>
   </form>
 {% endblock content %}
